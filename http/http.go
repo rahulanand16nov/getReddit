@@ -1,11 +1,10 @@
 package http
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"os"
-	"strings"
-	"encoding/json"
 )
 
 func getJSON(url string, target interface{}) error {
@@ -18,6 +17,7 @@ func getJSON(url string, target interface{}) error {
 }
 
 func downloadFile(filepath string, url string) error {
+
 	// Creating file
 	out, err := os.Create(filepath)
 	if err != nil {
