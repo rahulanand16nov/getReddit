@@ -4,9 +4,20 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
+	"encoding/json"
 )
 
-func DownloadFile(filepath string, url string) error {
+func getJSON(url string, target interface{}) error {
+	// Getting data
+	r, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	return json.NewDecoder(r.Body).Decode(target)
+}
+
+func downloadFile(filepath string, url string) error {
 	// Creating file
 	out, err := os.Create(filepath)
 	if err != nil {
