@@ -7,7 +7,9 @@ import (
 	"os"
 )
 
-func getJSON(url string, target interface{}) error {
+// It contains all the stuff that is needed for preparing and formatting data which is fetched from reddit APIs
+
+func GetJSON(url string, target interface{}) error {
 	// Getting data
 	r, err := http.Get(url)
 	if err != nil {
@@ -16,7 +18,7 @@ func getJSON(url string, target interface{}) error {
 	return json.NewDecoder(r.Body).Decode(target)
 }
 
-func downloadFile(filepath string, url string) error {
+func DownloadFile(filepath string, url string) error {
 
 	// Creating file
 	out, err := os.Create(filepath)
