@@ -4,10 +4,11 @@ package reddit
 
 type post struct {
 	Data struct {
-		Subreddit string `json:"subreddit"`
-		Title     string `json:"title"`
-		Author    string `json:"author"`
-		Permalink string `json:"permalink"`
+		Subreddit string   `json:"subreddit"`
+		Title     string   `json:"title"`
+		Author    string   `json:"author"`
+		URL       string   `json:"url"`
+		Category  []string `json:"content_categories"`
 	} `json:"data"`
 }
 
