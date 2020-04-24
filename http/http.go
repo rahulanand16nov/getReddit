@@ -32,28 +32,37 @@ func GetJSON(url string, target interface{}) error {
 	return json.NewDecoder(res.Body).Decode(target)
 }
 
-func DownloadFile(filepath string, url string) error {
-
-	// Creating file
-	out, err := os.Create(filepath)
+func DownloadFile(filename string, url string) error {
+	// Create the directory
+	_ = os.Mkdir("Images", os.ModeDir)
+	// Create the file
+	out, err := os.Create("Images/"+filename + ".jpg")
 	if err != nil {
 		return err
 	}
 	defer out.Close()
-
-	// Getting data
-	r, err := http.Get(url)
-	if err != nil {
-		return err
+	
+	// Get the data
+	resp, err := http.Get(url)
+    if err != nil {
+        return err
 	}
-	defer r.Body.Close()
+	defer resp.Body.Close()
 
-	//Writting data to a file
-	_, err = io.Copy(out, r.Body)
-	if err != nil {
-		return err
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+    if err != nil {
+        return err
 	}
-
+	
 	return nil
-
 }
+
+func RemoveImages() error {
+	err:= os.RemoveAll("Images/")
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
