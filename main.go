@@ -10,7 +10,7 @@ func main() {
 	fmt.Println("getReddit - v0.1")
 	mainListing := reddit.Listing{}
 	http.GetJSON("https://www.reddit.com/r/AskReddit/.json", &mainListing)
-	err := http.SaveJSON(&mainListing)
+	err := http.SaveJSON(&mainListing.Data.Children)
 	if err == nil {
 		fmt.Println("Saved data to data.json file")
 	}
