@@ -3,6 +3,7 @@ package http
 import (
 	"encoding/json"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
@@ -30,6 +31,15 @@ func GetJSON(url string, target interface{}) error {
 	// Body must be closed to prevent resource leak.
 	defer res.Body.Close()
 	return json.NewDecoder(res.Body).Decode(target)
+}
+
+func SaveJSON(data interface{}) error {
+	dataJSON, _ := json.Marshal(data)
+	err := ioutil.WriteFile("data.json", dataJSON,0644)
+	if err != nil {
+		return nil
+	}
+	return nil
 }
 
 func DownloadFile(filename string, url string) error {

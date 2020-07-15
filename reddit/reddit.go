@@ -7,9 +7,7 @@ type post struct {
 		Subreddit string   `json:"subreddit"`
 		Title     string   `json:"title"`
 		Author    string   `json:"author"`
-		URL       string   `json:"url"`
 		Name	  string   `json:"name"`
-		Category  []string `json:"content_categories"`
 	} `json:"data"`
 }
 
