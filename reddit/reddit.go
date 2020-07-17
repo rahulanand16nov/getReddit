@@ -12,6 +12,8 @@ type post struct {
 		Up_votes  int32    `json:"ups"`
 		Comments  int32    `json:"num_comments"`
 		Created    json.Number `json:"created_utc"`
+		Media_URL string   `json:"url_overridden_by_dest"`
+		Media_type string
 	} `json:"data"`
 }
 

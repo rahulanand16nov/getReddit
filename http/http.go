@@ -35,7 +35,7 @@ func GetJSON(url string, target interface{}) error {
 
 func SaveJSON(data interface{}) error {
 	dataJSON, _ := json.Marshal(data)
-	err := ioutil.WriteFile("data.json", dataJSON,0644)
+	err := ioutil.WriteFile("postData.json", dataJSON,0644)
 	if err != nil {
 		return nil
 	}
@@ -44,9 +44,9 @@ func SaveJSON(data interface{}) error {
 
 func DownloadFile(filename string, url string) error {
 	// Create the directory
-	_ = os.Mkdir("Images", os.ModeDir)
+	_ = os.Mkdir("images", os.ModeDir)
 	// Create the file
-	out, err := os.Create("Images/"+filename + ".jpg")
+	out, err := os.Create("images/"+filename + ".jpg")
 	if err != nil {
 		return err
 	}
