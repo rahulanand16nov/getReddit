@@ -42,7 +42,7 @@ func SaveJSON(data interface{}) error {
 	return nil
 }
 
-func DownloadFile(filename string, url string) error {
+func DownloadImages(filename string, url string) error {
 	// Create the directory
 	_ = os.Mkdir("images", os.ModeDir)
 	// Create the file
@@ -69,7 +69,7 @@ func DownloadFile(filename string, url string) error {
 }
 
 func RemoveImages() error {
-	err:= os.RemoveAll("Images/")
+	err:= os.RemoveAll("images/")
 	if err != nil {
 		return err
 	}
