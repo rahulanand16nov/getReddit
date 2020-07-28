@@ -21,4 +21,14 @@ type Listing struct {
 	Data struct {
 		Children []post `json:"children"`
 	} `json:"data"`
+	After string `json:"after"`
+}
+
+type MainListing struct {
+	Posts []post
+}
+
+type ImageTask struct {
+	Url string
+	Name string
 }

@@ -7,6 +7,9 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"fmt"
+	"sync"
+	"getReddit/reddit"
 )
 
 // It contains all the stuff that is needed for preparing and formatting data which is fetched from reddit APIs
@@ -42,30 +45,39 @@ func SaveJSON(data interface{}) error {
 	return nil
 }
 
-func DownloadImages(filename string, url string) error {
-	// Create the directory
-	_ = os.Mkdir("images", os.ModeDir)
-	// Create the file
-	out, err := os.Create("images/"+filename + ".jpg")
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-	
-	// Get the data
-	resp, err := http.Get(url)
-    if err != nil {
-        return err
-	}
-	defer resp.Body.Close()
+func ExecuteImageWorker(wg *sync.WaitGroup, imageTasks chan reddit.ImageTask) {
 
-	// Write the body to file
-	_, err = io.Copy(out, resp.Body)
-    if err != nil {
-        return err
+	for task := range imageTasks {
+		// Create the directory
+		_ = os.Mkdir("images", os.ModeDir)
+		// Create the file
+		out, err := os.Create("images/"+task.Name + ".jpg")
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		defer out.Close()
+		
+		// Get the data
+		resp, err := http.Get(task.Url)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			fmt.Println("Status code not ok")
+			continue
+		}
+		fmt.Println("IMAGE DOWNLOADED!")
+		// Write the body to file
+		_, err = io.Copy(out, resp.Body)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	
-	return nil
+	wg.Done()
 }
 
 func RemoveImages() error {
