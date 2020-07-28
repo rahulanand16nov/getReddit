@@ -2,8 +2,12 @@
 Concurrency based Reddit Scraper in Go
 Note: This repo is meant to be used in conjunction [reddit-frame](https://github.com/rahulanand16nov/reddit-frame)
 
+## See this in action
+[![Watch getReddit in Action](https://i.imgur.com/ZwUbcxW.png)](https://drive.google.com/file/d/1v0s0y4S7AJLRPDZdbq81jYuYTkyF3Afu/view)
+
 ## What's the point?
 * I wanted to learn Golang and why it's praised a lot in distributed & parallel computing community.
+* I hated the fact that reddit sometimes consumes more data than youtube (hats off to youtube engineers!).
 * Showcase my skills as an aspiring software engineer.
 
 ## Running the project

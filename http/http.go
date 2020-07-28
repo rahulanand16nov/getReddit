@@ -70,7 +70,7 @@ func ExecuteImageWorker(wg *sync.WaitGroup, imageTasks chan reddit.ImageTask) {
 			fmt.Println("Status code not ok")
 			continue
 		}
-		fmt.Println("IMAGE DOWNLOADED!")
+		fmt.Println("Image "+task.Name+".jpg Downloaded")
 		// Write the body to file
 		_, err = io.Copy(out, resp.Body)
 		if err != nil {

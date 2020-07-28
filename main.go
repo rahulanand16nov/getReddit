@@ -27,6 +27,7 @@ func main() {
 	// Remove already downloaded images
 	http.RemoveImages()
 
+	// Semaphores
 	var wg sync.WaitGroup
 	wg.Add(1)
 
