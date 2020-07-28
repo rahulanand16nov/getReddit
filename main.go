@@ -6,6 +6,7 @@ import (
 	"getReddit/http"
 	"getReddit/reddit"
 	"sync"
+	"math/rand"
 )
 
 const MAX_IMAGE_WORKERS int = 10
@@ -23,6 +24,12 @@ func main() {
 
 		mainListing.Posts = append(mainListing.Posts[:], listing.Data.Children...)
 	}
+	
+	// Shuffle posts from various subreddits
+	rand.Seed(5)
+	rand.Shuffle(len(mainListing.Posts), func(i, j int) {
+		mainListing.Posts[i], mainListing.Posts[j] = mainListing.Posts[j], mainListing.Posts[i]
+	})
 
 	// Remove already downloaded images
 	http.RemoveImages()
@@ -34,10 +41,10 @@ func main() {
 	// Adding image urls into the channel to be downloaded by workers
 	imageTasks := make(chan reddit.ImageTask)
 	go func() {
-		for _, post := range mainListing.Posts {
+		for i, post := range mainListing.Posts {
 			url_len := len(post.Data.Media_URL)
 			if url_len > 3 && post.Data.Media_URL[url_len-3:] == "jpg" {
-				post.Data.Media_type = "Img"
+				mainListing.Posts[i].Data.Media_type = "Img"
 				task := reddit.ImageTask{Url: post.Data.Media_URL, Name: post.Data.Name}
 				imageTasks <- task
 			}
